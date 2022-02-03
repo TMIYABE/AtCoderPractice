@@ -14,7 +14,7 @@ namespace AtCoderPractice
                 var isNumber = new ValidateNum().isNumber(input);
                 if (!isNumber)
                 {
-                    throw new FormatException();
+                    throw new FormatException("数字のみを入力してください");
                 }
 
                 var num = int.Parse(input);
