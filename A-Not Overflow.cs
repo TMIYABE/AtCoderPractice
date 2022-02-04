@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace AtCoderPractice
 {
+    //https://atcoder.jp/contests/abc237/tasks/abc237_a
     class NotOverFlow
     {
         static void Main(string[] args)

@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace AtCoderPractice
 {
+    //https://atcoder.jp/contests/abc237/tasks/abc237_b
     class B___Matrix_Transposition
     {
         static void Main(string[] args)

@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace AtCoderPractice
 {
+    //https://atcoder.jp/contests/abc237/tasks/abc237_c
     class C___kasaka
     {
         static void Main(string[] args)
