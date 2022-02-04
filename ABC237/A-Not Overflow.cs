@@ -18,7 +18,6 @@ namespace AtCoderPractice
                     throw new FormatException("数字のみを入力してください");
                 }
 
-                var num = int.Parse(input);
                 Console.WriteLine("Yes");
             }
             catch (OverflowException ex)
@@ -38,12 +37,12 @@ namespace AtCoderPractice
     {
         public bool isNumber(string num_str)
         {
+            var minus = "-";
             if (string.IsNullOrEmpty(num_str))
             {
                 return false;
             }
-            var headChar = num_str.Substring(0, 1);
-            num_str = (headChar == "-") ? num_str.Substring(1) : num_str;
+            num_str = (num_str.StartsWith(minus)) ? num_str.Substring(1) : num_str;
             return (num_str.All(char.IsDigit));
         }
     }
