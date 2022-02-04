@@ -37,8 +37,10 @@ namespace AtCoderPractice
         }
     }
 
+    //行列を作るクラス。
     class Setup
     {
+        //入力値から行列を生成する。
         public void SetupMatrix(int[,] matrix, int Hight, int Width)
         {
             for (int i = 0; i < Hight; i++)
@@ -51,7 +53,7 @@ namespace AtCoderPractice
                 }
             }
         }
-
+        //行列から転置行列を作る。
         public int[,] InvertMatrix(int[,] matrix)
         {
             var argHeight = matrix.GetLength(0);
@@ -70,8 +72,11 @@ namespace AtCoderPractice
             return ret;
         }
     }
+
+    //行列を出力するクラス。
     class Output
     {
+        //コンソールに行列を出力する。
         public void outputMatrixToConsole(int[,] matrix)
         {
             var argHeight = matrix.GetLength(0);
