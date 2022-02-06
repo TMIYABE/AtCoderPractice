@@ -12,10 +12,10 @@ namespace AtCoderPractice
             try
             {
                 var input = Console.ReadLine();
-                var check = new Check();
-                check.CheckInput(input);
+                var checker = new Checker();
+                checker.CheckInput(input);
 
-                if (check.CheckReversible_ByAdding_a(input))
+                if (checker.CheckReversible_ByAdding_a(input))
                 {
                     Console.WriteLine("Yes");
                 }
@@ -34,7 +34,7 @@ namespace AtCoderPractice
         }
     }
 
-    class Check
+    class Checker
     {
         public void CheckInput(string input)
         {
@@ -47,36 +47,28 @@ namespace AtCoderPractice
         //先頭にaを加えることで反転可能になるかどうかのチェック
         public bool CheckReversible_ByAdding_a(string input)
         {
+            string input_without_a;
             char a = 'a';
             if (input.All(x => x == a)) return true;
 
-            var a_count_front = Count_a(ref input);
+            var a_count_front = Count_a(input);
 
-            input = String.Join("", input.Reverse());
-            var a_count_back = Count_a(ref input);
+            var input_reverse = String.Join("", input.Reverse());
+            var a_count_back = Count_a(input_reverse);
 
             if (a_count_front > a_count_back) return false;
 
-            return CheckReversible(input.ToArray());
+            input_without_a = input.Substring(a_count_front, input.Length - a_count_front - a_count_back);
+            return CheckReversible(input_without_a.ToArray());
 
 
         }
 
-        private int Count_a(ref string str)
+        private int Count_a(string str)
         {
             char a = 'a';
-            int a_count = 0;
-            var str_length = str.Count();
-            for (int i = 0; i < str_length; i++)
-            {
-                if (str[i] == a)
-                {
-                    a_count++;
-                    continue;
-                }
-                break;
-            }
-            str = str.Substring(a_count);
+            var a_count = str.TakeWhile(x => x == a).Count();
+
             return a_count;
         }
 
