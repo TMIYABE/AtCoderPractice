@@ -18,13 +18,12 @@ namespace AtCoderPractice
                 }
                 var H = input[0];
                 var W = input[1];
-                var A = new int[H, W];
 
-                var setup = new Setup();
-                setup.SetupMatrix(A, H, W);
+                var mrx = new Matrix(H, W);
+                var matrix = mrx.matrix;
+                var matrix_inverted = mrx.matrix_inverted;
 
-                var B = setup.InvertMatrix(A);
-                new Output().outputMatrixToConsole(B);
+                mrx.outputMatrixToConsole(matrix_inverted);
             }
             catch (FormatException ex)
             {
@@ -37,24 +36,33 @@ namespace AtCoderPractice
         }
     }
 
-    //行列を作るクラス。
-    class Setup
+    class Matrix
     {
-        //入力値から行列を生成する。
-        public void SetupMatrix(int[,] matrix, int Hight, int Width)
+        public int[,] matrix;
+        public int[,] matrix_inverted;
+
+        public Matrix(int Height, int Width)
         {
-            for (int i = 0; i < Hight; i++)
+            matrix = SetupMatrix(Height, Width);
+            matrix_inverted = InvertMatrix(matrix);
+        }
+
+        private int[,] SetupMatrix(int Height, int Width)
+        {
+            var ret = new int[Height, Width];
+
+            for (int i = 0; i < Height; i++)
             {
                 var matrixRow = Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToList();
 
                 for (int j = 0; j < Width; j++)
                 {
-                    matrix[i, j] = matrixRow[j];
+                    ret[i, j] = matrixRow[j];
                 }
             }
+            return ret;
         }
-        //行列から転置行列を作る。
-        public int[,] InvertMatrix(int[,] matrix)
+        private int[,] InvertMatrix(int[,] matrix)
         {
             var argHeight = matrix.GetLength(0);
             var argWidth = matrix.GetLength(1);
@@ -71,12 +79,7 @@ namespace AtCoderPractice
 
             return ret;
         }
-    }
 
-    //行列を出力するクラス。
-    class Output
-    {
-        //コンソールに行列を出力する。
         public void outputMatrixToConsole(int[,] matrix)
         {
             var argHeight = matrix.GetLength(0);
