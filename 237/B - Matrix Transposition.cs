@@ -53,11 +53,9 @@ namespace AtCoderPractice
 
             for (int i = 0; i < Height; i++)
             {
-                var matrixRow = Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToList();
-
                 for (int j = 0; j < Width; j++)
                 {
-                    ret[i, j] = matrixRow[j];
+                    ret[i, j] = Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToList()[j];
                 }
             }
             return ret;
