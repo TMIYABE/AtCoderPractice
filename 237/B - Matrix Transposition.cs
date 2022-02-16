@@ -49,15 +49,19 @@ namespace AtCoderPractice
 
         private int[,] SetupMatrix(int Height, int Width)
         {
-            var ret = new int[Height, Width];
+            var inputRows = Enumerable.Range(0, Height).Select(_ => Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToList()).ToList();
 
-            for (int i = 0; i < Height; i++)
-            {
-                for (int j = 0; j < Width; j++)
-                {
-                    ret[i, j] = Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToList()[j];
-                }
-            }
+            var ret = Enumerable.Range(0, Height).Aggregate(new int[Height, Width], (mat1, i) =>
+               {
+                   mat1 = Enumerable.Range(0, Width).Aggregate(mat1, (mat2, j) =>
+                            {
+                                mat2[i, j] = inputRows[i][j];
+                                return mat2;
+                            });
+                   return mat1;
+               });
+
+
             return ret;
         }
         private int[,] InvertMatrix(int[,] matrix)
@@ -65,15 +69,15 @@ namespace AtCoderPractice
             var argHeight = matrix.GetLength(0);
             var argWidth = matrix.GetLength(1);
 
-            var ret = new int[argWidth, argHeight];
-
-            for (int i = 0; i < argWidth; i++)
+            var ret = Enumerable.Range(0, argWidth).Aggregate(new int[argWidth, argHeight], (mat1, i) =>
             {
-                for (int j = 0; j < argHeight; j++)
+                mat1 = Enumerable.Range(0, argHeight).Aggregate(mat1, (mat2, j) =>
                 {
-                    ret[i, j] = matrix[j, i];
-                }
-            }
+                    mat2[i, j] = matrix[j, i];
+                    return mat2;
+                });
+                return mat1;
+            });
 
             return ret;
         }
