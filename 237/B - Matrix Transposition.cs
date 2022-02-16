@@ -87,14 +87,14 @@ namespace AtCoderPractice
             var argHeight = matrix.GetLength(0);
             var argWidth = matrix.GetLength(1);
 
-            for (int i = 0; i < argHeight; i++)
+            Enumerable.Range(0, argHeight).ToList().ForEach(x =>
             {
-                for (int j = 0; j < argWidth; j++)
+                Enumerable.Range(0, argWidth).ToList().ForEach(y =>
                 {
-                    Console.Write(matrix[i, j] + " ");
-                }
+                    Console.Write(matrix[x, y] + " ");
+                });
                 Console.WriteLine("");
-            }
+            });
         }
     }
 }
