@@ -9,18 +9,21 @@ namespace AtCoderPractice._236
     {
         static void Main(string[] args)
         {
-            try
+            var N = Console.ReadLine();
+            var AList = Console.ReadLine().Split(' ').ToArray();
+
+            var card = new Card(N, AList);
+
+            if (!card.hasError)
             {
-                var N = Console.ReadLine();
-                var AList = Console.ReadLine().Split(' ').ToArray();
-
-                var card = new Card(N, AList);
-
                 Console.WriteLine(card.JudgeSelectedCard());
             }
-            catch (FormatException ex)
+            else
             {
-                Console.WriteLine("\nMessage ---\n{0}", ex.Message);
+                card.errList.ForEach(ex =>
+                {
+                    Console.WriteLine("\nMessage ---\n{0}", ex.Message);
+                });
             }
 
         }
@@ -31,43 +34,61 @@ namespace AtCoderPractice._236
         public int NumofCards;
         public int[] cardList;
 
+        public List<Exception> errList = new List<Exception>();
+        public bool hasError;
+
         public Card(string N, string[] AList)
         {
-            CheckN(N);
-            maxNum = int.Parse(N);
-            NumofCards = 4 * maxNum - 1;
+            if (!CheckN(N))
+            {
+                maxNum = int.Parse(N);
+                NumofCards = 4 * maxNum - 1;
 
-            CheckAList(AList);
-            cardList = AList.Select(A => int.Parse(A)).ToArray();
+                if (!CheckAList(AList))
+                {
+                    cardList = AList.Select(A => int.Parse(A)).ToArray();
+                }
+            }
         }
-        private void CheckN(string N)
+        private bool CheckN(string N)
         {
+            hasError = false;
             if (String.IsNullOrEmpty(N) || !N.All(Char.IsDigit))
             {
-                throw new FormatException("Nは数値でなければいけません。");
+                errList.Add(new FormatException("Nは数値でなければいけません。"));
+                hasError = true;
             }
 
             if (int.Parse(N) < 1 || 100000 < int.Parse(N))
             {
-                throw new FormatException("Nは1以上100000以下でなければいけません。");
+                errList.Add(new FormatException("Nは1以上100000以下でなければいけません。"));
+                hasError = true;
             }
+
+            return hasError;
         }
-        private void CheckAList(string[] AList)
+        private bool CheckAList(string[] AList)
         {
+            hasError = false;
             if (AList.Count() != NumofCards)
             {
-                throw new FormatException("渡したカード枚数が正しくありません");
+                errList.Add(new FormatException("渡したカード枚数が正しくありません"));
+                hasError = true;
             }
 
             if (AList.Any(A => !A.All(Char.IsDigit)))
             {
-                throw new FormatException("渡したカードの値として、全て数値を入力してください。");
+                errList.Add(new FormatException("渡したカードの値として、全て数値を入力してください。"));
+                hasError = true;
             }
 
             if (AList.Any(A => int.Parse(A) < 1 || maxNum < int.Parse(A)))
             {
-                throw new FormatException("渡すカードの値は1以上N以下でなければいけません。");
+                errList.Add(new FormatException("渡すカードの値は1以上N以下でなければいけません。"));
+                hasError = true;
             }
+
+            return hasError;
         }
 
         public int JudgeSelectedCard()
