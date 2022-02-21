@@ -41,19 +41,19 @@ namespace AtCoderPractice
         public int[,] matrix;
         public int[,] matrix_inverted;
 
-        public Matrix(int Height, int Width)
+        public Matrix(int height, int width)
         {
-            matrix = SetupMatrix(Height, Width);
+            matrix = SetupMatrix(height, width);
             matrix_inverted = InvertMatrix(matrix);
         }
 
-        private int[,] SetupMatrix(int Height, int Width)
+        private int[,] SetupMatrix(int height, int width)
         {
-            var inputRows = Enumerable.Range(0, Height).Select(_ => Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToList()).ToList();
+            var inputRows = Enumerable.Range(0, height).Select(_ => Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToList()).ToList();
 
-            var ret = Enumerable.Range(0, Height).Aggregate(new int[Height, Width], (mat1, i) =>
+            var ret = Enumerable.Range(0, height).Aggregate(new int[height, width], (mat1, i) =>
                {
-                   mat1 = Enumerable.Range(0, Width).Aggregate(mat1, (mat2, j) =>
+                   mat1 = Enumerable.Range(0, width).Aggregate(mat1, (mat2, j) =>
                             {
                                 mat2[i, j] = inputRows[i][j];
                                 return mat2;
