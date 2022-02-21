@@ -35,7 +35,7 @@ namespace AtCoderPractice._236
         public int[] cardList;
 
         public List<Exception> errList = new List<Exception>();
-        public bool hasError;
+        public bool hasError = false;
 
         public Card(string N, string[] AList)
         {
@@ -52,7 +52,6 @@ namespace AtCoderPractice._236
         }
         private bool CheckN(string N)
         {
-            hasError = false;
             if (String.IsNullOrEmpty(N) || !N.All(Char.IsDigit))
             {
                 errList.Add(new FormatException("Nは数値でなければいけません。"));
@@ -69,7 +68,6 @@ namespace AtCoderPractice._236
         }
         private bool CheckAList(string[] AList)
         {
-            hasError = false;
             if (AList.Count() != NumofCards)
             {
                 errList.Add(new FormatException("渡したカード枚数が正しくありません"));
