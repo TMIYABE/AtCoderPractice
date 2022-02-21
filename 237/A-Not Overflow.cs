@@ -12,7 +12,7 @@ namespace AtCoderPractice
             try
             {
                 var input = Console.ReadLine();
-                var isNumber = new ValidateNum().isNumber(input);
+                var isNumber = new ValidateNum().IsNumber(input);
                 if (!isNumber)
                 {
                     throw new FormatException("数字のみを入力してください");
@@ -35,7 +35,7 @@ namespace AtCoderPractice
 
     class ValidateNum
     {
-        public bool isNumber(string num_str)
+        public bool IsNumber(string num_str)
         {
             var minus = "-";
             if (string.IsNullOrEmpty(num_str))

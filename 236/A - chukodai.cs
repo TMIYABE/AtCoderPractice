@@ -31,20 +31,20 @@ namespace AtCoderPractice._236
         public int b;
         public InputExchanger(string inputStr, string[] nums)
         {
-            checkSmallLetter(inputStr);
-            checkTwoNumbers(nums, inputStr);
+            CheckSmallLetter(inputStr);
+            CheckTwoNumbers(nums, inputStr);
             input = inputStr.ToCharArray();
             a = int.Parse(nums[0]);
             b = int.Parse(nums[1]);
         }
-        private void checkSmallLetter(string input)
+        private void CheckSmallLetter(string input)
         {
             if (string.IsNullOrEmpty(input) || !input.All(Char.IsLower))
             {
                 throw new FormatException("小文字のみの文字列を、1文字以上入力してください。");
             }
         }
-        private void checkTwoNumbers(string[] input, string inputStr)
+        private void CheckTwoNumbers(string[] input, string inputStr)
         {
             if (input.Count() != 2 || input.Any(x => string.IsNullOrEmpty(x)))
             {

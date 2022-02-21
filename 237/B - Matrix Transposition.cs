@@ -23,7 +23,7 @@ namespace AtCoderPractice
                 var matrix = mrx.matrix;
                 var matrix_inverted = mrx.matrix_inverted;
 
-                mrx.outputMatrixToConsole(matrix_inverted);
+                mrx.OutputMatrixToConsole(matrix_inverted);
             }
             catch (FormatException ex)
             {
@@ -82,7 +82,7 @@ namespace AtCoderPractice
             return ret;
         }
 
-        public void outputMatrixToConsole(int[,] matrix)
+        public void OutputMatrixToConsole(int[,] matrix)
         {
             var argHeight = matrix.GetLength(0);
             var argWidth = matrix.GetLength(1);
