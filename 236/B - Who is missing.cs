@@ -12,15 +12,19 @@ namespace AtCoderPractice._236
             var N = Console.ReadLine();
             var AList = Console.ReadLine().Split(' ').ToArray();
 
-            var card = new Card(N, AList);
-
-            if (!card.hasError)
+            var checker = new Checker();
+            if (!checker.CheckN(N))
             {
-                Console.WriteLine(card.JudgeSelectedCard());
+                if (!checker.CheckAList(AList, N))
+                {
+                    var card = new Card(N, AList);
+                    Console.WriteLine(card.JudgeSelectedCard());
+                }
             }
-            else
+
+            if (checker.hasError)
             {
-                card.errList.ForEach(ex =>
+                checker.errList.ForEach(ex =>
                 {
                     Console.WriteLine("\nMessage ---\n{0}", ex.Message);
                 });
@@ -31,26 +35,31 @@ namespace AtCoderPractice._236
     class Card
     {
         public int maxNum;
-        public int NumofCards;
+        public int NumOfCards;
         public int[] cardList;
-
-        public List<Exception> errList = new List<Exception>();
-        public bool hasError = false;
 
         public Card(string N, string[] AList)
         {
-            if (!CheckN(N))
-            {
-                maxNum = int.Parse(N);
-                NumofCards = 4 * maxNum - 1;
+            maxNum = int.Parse(N);
+            NumOfCards = 4 * maxNum - 1;
 
-                if (!CheckAList(AList))
-                {
-                    cardList = AList.Select(A => int.Parse(A)).ToArray();
-                }
-            }
+            cardList = AList.Select(A => int.Parse(A)).ToArray();
         }
-        private bool CheckN(string N)
+
+        public int JudgeSelectedCard()
+        {
+            var groupedCards = cardList.GroupBy(x => x).Select(y => new { num = y.Key, count = y.Count() });
+
+            return groupedCards.FirstOrDefault(x => x.count != 4).num;
+        }
+    }
+
+    class Checker
+    {
+        public List<Exception> errList = new List<Exception>();
+        public bool hasError = false;
+
+        public bool CheckN(string N)
         {
             if (String.IsNullOrEmpty(N) || !N.All(Char.IsDigit))
             {
@@ -66,9 +75,10 @@ namespace AtCoderPractice._236
 
             return hasError;
         }
-        private bool CheckAList(string[] AList)
+        public bool CheckAList(string[] AList, string N)
         {
-            if (AList.Count() != NumofCards)
+            var numN = int.Parse(N);
+            if (AList.Count() != 4 * numN - 1)
             {
                 errList.Add(new FormatException("渡したカード枚数が正しくありません"));
                 hasError = true;
@@ -80,20 +90,13 @@ namespace AtCoderPractice._236
                 hasError = true;
             }
 
-            if (AList.Any(A => int.Parse(A) < 1 || maxNum < int.Parse(A)))
+            if (AList.Any(A => int.Parse(A) < 1 || numN < int.Parse(A)))
             {
                 errList.Add(new FormatException("渡すカードの値は1以上N以下でなければいけません。"));
                 hasError = true;
             }
 
             return hasError;
-        }
-
-        public int JudgeSelectedCard()
-        {
-            var groupedCards = cardList.GroupBy(x => x).Select(y => new { num = y.Key, count = y.Count() });
-
-            return groupedCards.FirstOrDefault(x => x.count != 4).num;
         }
     }
 }
